@@ -1,6 +1,8 @@
 export interface IProduct {
-  name: string,
-  price: number,
-  description: string,
-  imgUrl: string
+  id:number,
+  name:string,
+  price:number,
+  quantity:number,
+  imgUrl:string,
+  catId:number
 }
