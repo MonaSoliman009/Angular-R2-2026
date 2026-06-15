@@ -1,34 +1,24 @@
 <!-- ✅ Grid Section - Starts Here 👇 -->
-<h1 class="text-center">Total order price is : {{ totalOrderPrice }}</h1>
-<h3>Select cat id : {{ selectedCatId }}</h3>
-<div class="mb-3 mx-auto w-50">
-  <label for="" class="form-label">Category</label>
-  <select class="form-select form-select-lg" name="" id="" [(ngModel)]="selectedCatId">
-    @for (cat of categories; track cat.id) {
-      <option [value]="cat.id">{{ cat.name }}</option>
-    }
-  </select>
-</div>
 
 <section
   class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
 >
-  @for (prd of products; track prd.id; let i=$index,c=$count,f=$first,o=$odd) {
-    <!-- <div [class.hidden]="prd.catId!=selectedCatId"  class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"> -->
-    @if (prd.catId == selectedCatId) {
-      <!-- <div [ngClass]="(prd.quantity==0)?'bg-yellow-300':'bg-white'" class="w-72  shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"> -->
-      <!-- [ngClass]="{'bg-amber-300':prd.quantity==0,'text-3xl':prd.price==0}"  -->
-        <!-- [ngStyle]="{ 'background-color': prd.quantity == 0 ? 'yellow' : 'white' }" -->
-
-      <div
-      [style.background-color]="(prd.quantity==0)?'yellow':'white'"
+  @for (prd of filteredProducts ; track prd.id; let i=$index,c=$count,f=$first,o=$odd) {
+      <!-- <div
+      appHighlight
+      defaultColor="yellow"
+      highlightColor="green"
         class="w-72 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
-      >
+      > -->
+      <div class="w-72 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
         <a href="#">
           <img [src]="prd.imgUrl" alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
           <div class="px-4 py-3 w-72">
-            <p [class]="inpClass" class="text-lg font-bold text-black truncate block capitalize">
-              Name :{{ o }}-{{ prd.name }}
+            <p class="text-lg font-bold text-black truncate block">
+              <!-- Name :{{ prd.name | uppercase }} -->
+              <!-- Name :{{ prd.name | lowercase }} -->
+              <!-- Name :{{ prd.name | titlecase }} -->
+             Name :{{ prd.name | shorten:8}}
             </p>
             @switch (prd.quantity) {
               @case (0) {
@@ -54,7 +44,7 @@
                 </p> -->
             <div class="flex items-center">
               <p class="text-lg font-semibold text-black cursor-auto my-3">
-                price is :{{ prd.price }}
+                price is :{{ prd.price | currency:'EUR':'code'}}
               </p>
 
               <div class="ml-auto">
@@ -90,7 +80,7 @@
           </div>
         </a>
       </div>
-    }
+
     <!-- @else{
       <h1>Hidden</h1>
     } -->
@@ -98,3 +88,7 @@
     <h1>No Products to view</h1>
   }
 </section>
+
+
+<h3>Today's date is : {{d | date:'shortDate' }}</h3>
+<h4>{{products[0] | json}}</h4>
