@@ -1,1 +1,2 @@
-<p>login works!</p>
+<button [disabled]="isLoggedIn()" class="btn btn-success mx-5" (click)="login()">Login</button>
+<button [disabled]="!isLoggedIn()" class="btn btn-danger" (click)="logout()">Logout</button>

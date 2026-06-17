@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from "@angular/router";
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -7,4 +8,13 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar {}
+export class Navbar implements OnInit{
+  private authService=inject(Auth)
+   isLoggedIn=signal<boolean>(false)
+
+  ngOnInit(): void {
+   this.authService.getIsLoggedIn().subscribe((val)=>{
+    this.isLoggedIn.set(val)
+   })
+  }
+}

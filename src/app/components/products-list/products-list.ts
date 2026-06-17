@@ -9,8 +9,7 @@ import { StaticProducts } from '../../services/static-products';
 import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-products-list',
-  imports: [FormsModule, Highlight, UpperCasePipe, LowerCasePipe, TitleCasePipe,
-    CurrencyPipe, DatePipe, JsonPipe, ShortenPipe, RouterLink],
+  imports: [FormsModule,CurrencyPipe,ShortenPipe, RouterLink],
   templateUrl: './products-list.html',
   styleUrl: './products-list.css',
 })
@@ -19,14 +18,9 @@ export class ProductsList {
   private router=inject(Router)
   products: IProduct[] = this.productsService.getAllProducts()
   filteredProducts: IProduct[]
-  d: Date = new Date()
   totalOrderPrice: number = 0
   inpClass = 'bg-red-500'
-  // @Input('sentCatId') recievedCatId:number=0
   sentCatId = input<number>(0)
-
-  //1- define the event
-  // @Output() onTotalOrderPriceChanged: EventEmitter<number> = new EventEmitter<number>()
   onTotalOrderPriceChanged = output<number>()
 
   constructor() {
