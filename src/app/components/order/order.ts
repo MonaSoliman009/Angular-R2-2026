@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ElementRef, inject, QueryList, viewChild, ViewChild, viewChildren, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnInit, QueryList, signal, viewChild, ViewChild, viewChildren, ViewChildren } from '@angular/core';
 import { ICategory } from '../../models/icategory';
 import { FormsModule } from '@angular/forms';
 import { ProductsList } from "../products-list/products-list";
 import { StaticCategories } from '../../services/static-categories';
+import { CategoriesApi } from '../../services/categories-api';
 
 @Component({
   selector: 'app-order',
@@ -10,23 +11,20 @@ import { StaticCategories } from '../../services/static-categories';
   templateUrl: './order.html',
   styleUrl: './order.css',
 })
-export class Order implements AfterViewInit {
+export class Order implements AfterViewInit,OnInit {
   selectedCatId: number = 0
   orderPrice: number = 0
-  private categoriesSerive=inject(StaticCategories)
-  categories:ICategory[]=this.categoriesSerive.getAllCategories()
-  // @ViewChild('header') headerEle!: ElementRef
-  // @ViewChildren('header') headersList!:QueryList<ElementRef>
-  // @ViewChild(ProductsList) prdListComp!:ProductsList
-// @ViewChildren(ProductsList) productsListCompList!:QueryList<ProductsList>
-
-//  headerEle=viewChild<ElementRef>('header')
+  private categoriesApiSerive=inject(CategoriesApi)
+  categories=signal<ICategory[]>([])
  headerEleList=viewChildren<ElementRef[]>('header')
 
-//  constructor(private categoriesSerive:StaticCategories){
-//   this.categories=this.categoriesSerive.getAllCategories()
-//  }
-
+  ngOnInit(): void {
+    this.categoriesApiSerive.getAllCategories().subscribe({
+      next:(res)=>{
+        this.categories.set(res)
+      }
+    })
+  }
 
   setOrderPrice(recievedTotalOrderPrice: number) {
     this.orderPrice = recievedTotalOrderPrice

@@ -1,72 +1,82 @@
 <!-- ✅ Grid Section - Starts Here 👇 -->
 
+@if(showLoader()){
+  <div class="d-flex justify-content-center">
+<div class="spinner-border" role="status">
+</div>
+  </div>
+
+}@else {
+
 <section
   class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
 >
-  @for (prd of filteredProducts; track prd.id; let i=$index,c=$count,f=$first,o=$odd) {
-    <!-- <div
+  @if (isLoaded()) {
+    @if (filteredProducts()) {
+      @for (prd of filteredProducts(); track prd.id; let i=$index,c=$count,f=$first,o=$odd) {
+        <!-- <div
       appHighlight
       defaultColor="yellow"
       highlightColor="green"
         class="w-72 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
       > -->
-    <div class="w-72 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-      <img [src]="prd.imgUrl" alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
-      <div class="px-4 py-3 w-72">
-        <p class="text-lg font-bold text-black truncate block">
-          <!-- Name :{{ prd.name | uppercase }} -->
-          <!-- Name :{{ prd.name | lowercase }} -->
-          <!-- Name :{{ prd.name | titlecase }} -->
-          Name :{{ prd.name | shorten: 8 }}
-        </p>
-        @switch (prd.quantity) {
-          @case (0) {
-            <p class="text-lg font-bold text-black truncate block capitalize">
-              Quantity : Out of stock
+        <div class="w-72 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+          <img [src]="prd.imgUrl" alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
+          <div class="px-4 py-3 w-72">
+            <p class="text-lg font-bold text-black truncate block">
+              <!-- Name :{{ prd.name | uppercase }} -->
+              <!-- Name :{{ prd.name | lowercase }} -->
+              <!-- Name :{{ prd.name | titlecase }} -->
+              Name :{{ prd.name | shorten: 8 }}
             </p>
-          }
+            @switch (prd.quantity) {
+              @case (0) {
+                <p class="text-lg font-bold text-black truncate block capitalize">
+                  Quantity : Out of stock
+                </p>
+              }
 
-          @case (1) {
-            <p class="text-lg font-bold text-black truncate block capitalize">
-              Quantity : Last Item
-            </p>
-          }
-          @default {
-            <p class="text-lg font-bold text-black truncate block capitalize">
-              Quantity : {{ prd.quantity }}
-            </p>
-          }
-        }
+              @case (1) {
+                <p class="text-lg font-bold text-black truncate block capitalize">
+                  Quantity : Last Item
+                </p>
+              }
+              @default {
+                <p class="text-lg font-bold text-black truncate block capitalize">
+                  Quantity : {{ prd.quantity }}
+                </p>
+              }
+            }
 
-        <!-- <p class="text-lg font-bold text-black truncate block capitalize">
+            <!-- <p class="text-lg font-bold text-black truncate block capitalize">
                   Quantity : {{ (prd.quantity==0)?'out of stock':prd.quantity }}
                 </p> -->
-        <div class="flex items-center">
-          <p class="text-lg font-semibold text-black cursor-auto my-3">
-            price is :{{ prd.price | currency: 'EUR' : 'code' }}
-          </p>
+            <div class="flex items-center">
+              <p class="text-lg font-semibold text-black cursor-auto my-3">
+                price is :{{ prd.price | currency: 'EUR' : 'code' }}
+              </p>
 
-          <div class="ml-auto">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              class="bi bi-bag-plus"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-              />
-              <path
-                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
-              />
-            </svg>
-          </div>
-        </div>
-        <div>
-          <!-- <button
+              <div class="ml-auto">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  class="bi bi-bag-plus"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
+                  />
+                  <path
+                    d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <!-- <button
               type="button"
                 class="bg-blue-400 px-3 py-2 rounded-2xl text-neutral-50"
                 (click)="navigateToDetails(prd.id)"
@@ -74,16 +84,26 @@
                 Details
               </button> -->
 
-          <a name="" id="" class="btn btn-primary" [routerLink]="['/details',prd.id]" role="button">Details</a>
+              <a
+                name=""
+                id=""
+                class="btn btn-primary"
+                [routerLink]="['/details', prd.id]"
+                role="button"
+                >Details</a
+              >
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- @else{
+        <!-- @else{
       <h1>Hidden</h1>
     } -->
-  } @empty {
-    <h1>No Products to view</h1>
+      }
+    } @else {
+      <h1>No Product to view</h1>
+    }
   }
 </section>
+}
 

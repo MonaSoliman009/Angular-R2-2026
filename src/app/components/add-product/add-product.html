@@ -1,0 +1,77 @@
+<!-- <h3>{{prdName.className| json}}</h3> -->
+
+<form class="w-50 m-auto" #prdForm="ngForm" (submit)="addNewProduct()">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Name:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      placeholder="Enter email"
+      name="name"
+      [(ngModel)]="product.name"
+      required
+      minlength="3"
+      maxlength="10"
+      #prdName="ngModel"
+    />
+
+    @if (prdName.dirty && prdName.invalid) {
+      @if (prdName.hasError('required')) {
+        <p class="text-danger">Name is Required</p>
+      }
+      @if (prdName.hasError('minlength')) {
+        <p class="text-danger">Name must be at least 3 characters</p>
+      }
+      @if (prdName.hasError('maxlength')) {
+        <p class="text-danger">Name must be maximum 10 characters</p>
+      }
+    }
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Price</label>
+    <input
+      type="number"
+      class="form-control"
+      id="exampleInputPassword1"
+      placeholder="Price"
+      name="price"
+      [(ngModel)]="product.price"
+    />
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Quantity</label>
+    <input
+      type="number"
+      class="form-control"
+      id="exampleInputPassword1"
+      placeholder="Quantity"
+      name="quantity"
+      [(ngModel)]="product.quantity"
+    />
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Image</label>
+    <input
+      type="file"
+      class="form-control"
+      id="exampleInputPassword1"
+      placeholder="Password"
+      name="image"
+      [(ngModel)]="product.imgUrl"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="" class="form-label">Category</label>
+    <select class="form-select form-select-lg" name="catId" [(ngModel)]="product.catId">
+      <option selected disabled>Select one</option>
+      @for (cat of categories(); track cat.id) {
+        <option [value]="cat.id">{{ cat.name }}</option>
+      }
+    </select>
+  </div>
+
+  <button type="submit" [disabled]="prdForm.invalid" class="btn btn-primary">Submit</button>
+</form>

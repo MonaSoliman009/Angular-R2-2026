@@ -10,13 +10,16 @@
       <li class="mx-5 py-2">
         <a routerLink="/order">Products</a>
       </li>
+         <li class="mx-5 py-2">
+        <a routerLink="/add-product">Add Product</a>
+      </li>
       @if (!isLoggedIn()) {
         <li class="mx-5 py-2">
-          <a routerLink="/login">Login</a>
+          <a routerLink="/auth/login">Login</a>
         </li>
       } @else {
           <li class="mx-5 py-2">
-          <a routerLink="/login">Logout</a>
+          <a routerLink="/auth/login">Logout</a>
         </li>
       }
     </ul>
